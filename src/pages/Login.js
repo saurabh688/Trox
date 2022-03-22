@@ -12,7 +12,7 @@ const Login = () => {
         <div className="login">
             <Link href="/">
             {/* change to trox logo */}
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/1024px-Amazon_logo.svg.png" alt="logo" className="login__logo" />
+                <img src="../assets/logo/trox.png" alt="logo" className="login__logo" />
             </Link>
             <Grid>
                 <Paper elevation={10} className="paper__style">

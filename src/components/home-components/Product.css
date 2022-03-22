@@ -32,7 +32,7 @@
 }
 
 .product > button {
-    background-color: #f0c14b;
+    background-color: rgb(130, 203, 228);
     border: 1px solid;
-    border-color: #a88734 #9c73e1 #846a29;
+    border-color: rgb(130, 203, 228);
 }

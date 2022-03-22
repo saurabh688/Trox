@@ -11,7 +11,7 @@ const Header = () => {
         <nav className="header">
         {/* add trox logo instead of amazon */}
         {/* importing local image from folder src={require('../assets/banner_image/banner_image_1.jpg')}*/}
-            <img src="http://pngimg.com/uploads/amazon/amazon_PNG11.png" alt="logo" className="header__logo" />
+            <img src="../assets/logo/trox.png" alt="logo" className="header__logo" />
             <div className="header__search">
                 <input type="text" className="header__searchInput" />
                 <SearchIcon className="header__searchIcon"/>
@@ -36,17 +36,6 @@ const Header = () => {
                         </span>
                         <span className="header__optionTwo">
                             & Orders
-                        </span>
-                    </div>
-                </Link>
-                {/* Link 3 */}
-                <Link to="/" className="header__link">
-                    <div className="header__option">
-                        <span className="header__optionOne">
-                            You
-                        </span>
-                        <span className="header__optionTwo">
-                            Prime
                         </span>
                     </div>
                 </Link>
