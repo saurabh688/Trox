@@ -11,7 +11,7 @@ const Header = () => {
         <nav className="header">
         {/* add trox logo instead of amazon */}
         {/* importing local image from folder src={require('../assets/banner_image/banner_image_1.jpg')}*/}
-            <img src="../assets/logo/trox.png" alt="logo" className="header__logo" />
+            <img src={require("../assets/logo/trox.png")} alt="logo" className="header__logo" />
             <div className="header__search">
                 <input type="text" className="header__searchInput" />
                 <SearchIcon className="header__searchIcon"/>
