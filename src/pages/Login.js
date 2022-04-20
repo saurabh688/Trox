@@ -1,17 +1,20 @@
 import React from 'react';
 import { Grid, Paper, Avatar, TextField, FormControlLabel, Checkbox, Button, Typography, Link } from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-
-// import { Link } from 'react-router-dom';
-
 import './Login.css';
 
 const Login = () => {
 
+
+    const signIn = () =>{
+
+    }
+
+
+
     return (
         <div className="login">
             <Link href="/">
-            {/* change to trox logo */}
                 <img src={require("../assets/logo/trox.png")} alt="logo" className="login__logo" />
             </Link>
             <Grid>
@@ -22,7 +25,7 @@ const Login = () => {
                         </Avatar>
                         <h2>Sign In</h2>
                     </Grid>
-                    <TextField label="Username" placeholder="Enter username" fullWidth required/>
+                    <TextField label="Email or mobile phone number" placeholder="Email or mobile phone number" fullWidth required/>
                     <TextField label="Password" placeholder="Enter password" fullWidth required/>
                     <FormControlLabel
                         control={
@@ -33,7 +36,7 @@ const Login = () => {
                         }
                         label="Remember me"
                     />
-                    <Button type="submit" color="primary" variant="contained" id='btn__style' fullWidth>Sign In</Button>
+                    <Button type="submit" onClick={signIn} color="primary" variant="contained" id='btn__style' fullWidth>Sign In</Button>
                     <Typography>
                         <Link href="#">
                             Forgot Password ?
@@ -51,17 +54,3 @@ const Login = () => {
 }
 
 export default Login;
-
-
-{/* <div className="login__container">
-    <h1>Sign In</h1>
-    <form>
-        <h5>E-mail</h5>
-        <input type="email" />
-        <h5>Password</h5>
-        <input type="password" />
-        <button type="submit" className="login__signInButton">Sign In</button>
-    </form>
-    <p>By signing-in, you agree to Amazon's Terms and Conditions.</p>
-    <button className="login__registerButton">Create your Amazon Account</button>
-</div> */}
