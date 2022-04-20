@@ -1,8 +1,7 @@
 import React from 'react';
 
-import Header from '../layout/Header';
-import Subtotal from '../components/checkout-components/Subtotal';
-
+import Header from '../../layout/header/Header';
+import Subtotal from '../../components/checkout/Subtotal';
 import './Checkout.css'
 
 const Checkout = () => {
