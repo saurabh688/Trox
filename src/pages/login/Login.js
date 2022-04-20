@@ -10,12 +10,10 @@ const Login = () => {
 
     }
 
-
-
     return (
         <div className="login">
             <Link href="/">
-                <img src={require("../assets/logo/trox.png")} alt="logo" className="login__logo" />
+                <img src={require("../../assets/logo/trox.png")} alt="logo" className="login__logo" />
             </Link>
             <Grid>
                 <Paper elevation={10} className="paper__style">

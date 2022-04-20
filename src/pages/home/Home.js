@@ -1,9 +1,9 @@
 import React from 'react';
 
-import Header from '../layout/Header';
-import Product from '../components/home-components/Product';
+import Header from '../../layout/header/Header';
+import Product from '../../components/home/Product';
 import './Home.css';
-import BannerSlider from '../components/home-components/BannerSlider.js';
+import BannerSlider from '../../components/home/BannerSlider.js';
 
 const Home = () => {
     return (
