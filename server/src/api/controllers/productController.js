@@ -6,7 +6,7 @@ const viewAllProduct = async (req, res) => {
 
     if (productsList.success) {
         res
-        .status(200)
+        .status(200)   
         .json(productsList);
     }
     else if (!productsList.success && productsList.message == 'No product found!') {
