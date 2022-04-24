@@ -1,4 +1,5 @@
-const { viewAllProductService, addProductService, updateProductService } = require('../services/productService');
+const ErrorMessage = require('../../config/constants/ErrorMessage');
+const { viewAllProductService, viewProductPaginationService, addProductService, updateProductService } = require('../services/productService');
 
 const viewAllProduct = async (req, res) => {
     const productsList = await viewAllProductService();
@@ -9,7 +10,7 @@ const viewAllProduct = async (req, res) => {
         .status(200)   
         .json(productsList);
     }
-    else if (!productsList.success && productsList.message == 'No product found!') {
+    else if (!productsList.success && productsList.message == ErrorMessage.Product_Error.Error_8) {
         res
         .status(404)
         .json(productsList);
@@ -21,6 +22,28 @@ const viewAllProduct = async (req, res) => {
     }
 };
 
+const viewProductPagination = async (req, res) => {
+    console.log("Date:", new Date(), "Current page:", req.query.page);
+    const productList = await viewProductPaginationService(req.query.page);
+    console.log("Date:", new Date(), 'Data returned to view list of paginated product:', productList);
+
+    if (productList.success) {
+        res
+        .status(200)
+        .json(productList);
+    }
+    else if (!productList.success && productList.message == ErrorMessage.Product_Error.Error_8) {
+        res
+        .status(404)
+        .json(productList);
+    }
+    else if (!productList.success) {
+        res
+        .status(400)
+        .json(productList);
+    }
+}
+
 const addProduct = async (req, res) => {
     console.log("Date:", new Date(),"Product details from controller:", req.body)
     const productsList = await addProductService(req.body);
@@ -31,12 +54,12 @@ const addProduct = async (req, res) => {
         .status(201)
         .json(productsList);
     }
-    else if (productsList.success && productsList.message == 'Added some of the products!') {
+    else if (productsList.success && productsList.message == ErrorMessage.Product_Error.Error_1) {
         res
         .status(206)
         .json(productsList);
     }
-    else if (!productsList.success && productsList.message == 'No product details provided!' || productsList.message == 'Required data missing for the list of product details, Required data: productName, productCategory, price, description, batchNumber, skuID' || productsList.message == 'Could not add any product!') {
+    else if (!productsList.success && productsList.message == ErrorMessage.Product_Error.Error_2 || productsList.message == ErrorMessage.Product_Error.Error_3 || productsList.message == ErrorMessage.Product_Error.Error_4) {
         res
         .status(404)
         .json(productsList);
@@ -59,7 +82,7 @@ const updateProduct = async (req, res) => {
         .status(200)
         .json(productsList);
     }
-    else if (!productsList.success && productsList.message == 'Cannot without product ID!' || productsList.message == 'Required data missing from product details, Required data: productName, productCategory, price, description, batchNumber, skuID' || productsList.message == 'Products does not exist!' || productsList.message == 'Sorry could not update product details!') {
+    else if (!productsList.success && productsList.message == ErrorMessage.Product_Error.Error_5 || productsList.message == ErrorMessage.Product_Error.Error_3 || productsList.message == ErrorMessage.Product_Error.Error_6 || productsList.message == ErrorMessage.Product_Error.Error_7) {
         res
         .status(404)
         .json(productsList);
@@ -73,6 +96,7 @@ const updateProduct = async (req, res) => {
 
 module.exports = {
     viewAllProduct,
+    viewProductPagination,
     addProduct,
     updateProduct
 };

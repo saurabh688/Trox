@@ -17,6 +17,7 @@ const sequelize = require('./api/db/db');
 
 // Todo: Routes import
 
+const userSignUpSignInRouter = require('./api/routes/userSignUpSignIn');
 const productRouter = require('./api/routes/product');
 
 // * Initialize express App.
@@ -53,6 +54,7 @@ app.get("/", (req, res) => {
 
 // Todo: Add routes
 
+app.use(API_VERSION, userSignUpSignInRouter);
 app.use(API_VERSION, productRouter);
 
 // * Use PORT to establish connection with the server.
