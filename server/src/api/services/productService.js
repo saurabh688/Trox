@@ -1,3 +1,5 @@
+const { Op } = require('sequelize')
+
 // DB model import.
 const Product = require('../models/t_product.model');
 
@@ -211,6 +213,49 @@ const viewAllProductService = async () => {
     }
 };
 
+// ! Function to view products by pagination
+const viewProductPaginationService = async (currentPage) => {
+    try {
+        // * no of items to be displayed per page
+        let limit = 10;
+        // * no of items to be skipped for next page
+        let offset = 0 + ( currentPage - 1 ) * limit;
+
+        let listOfProducts = await Product.findAll({
+            limit: limit,
+            offset: offset,
+            where: {
+                isDeleted: false
+            },
+            order: [
+                ["productName", "ASC"]
+            ]
+        });
+
+        console.log('Date:', new Date(), 'data returned from product table:', listOfProducts);
+
+        // * if list returned is empty throw error
+        if (!listOfProducts.length) return {
+            success: false,
+            message: 'No product found!'
+        }
+
+        let productList = listOfProducts.map(product => product.dataValues);
+
+        return {
+            success: true,
+            message: 'Product List found!',
+            data: productList
+        };
+    }
+    catch (error) {
+        return {
+            success: false,
+            message: error
+        }
+    }
+}
+
 // ! Function to add list of products
 const addProductService = async (listOfProductDetails) => {
     
@@ -288,7 +333,7 @@ const updateProductService = async (productDetailsObject, productId) => {
         if (JSON.stringify(verifyDetails.verifiedProductDetails) === JSON.stringify({}))
             return {
                 success: false,
-                message: 'Required data missing from product details, Required data: productName, productCategory, price, description, batchNumber, skuID',
+                message: 'Required data missing for the list of product details, Required data: productName, productCategory, price, description, batchNumber, skuID',
                 data: {
                     verifiedData: verifyDetails.verifiedProductDetails,
                     missingData: verifyDetails.unverifiedProductDetails
@@ -328,6 +373,7 @@ const updateProductService = async (productDetailsObject, productId) => {
 
 module.exports = {
     viewAllProductService,
+    viewProductPaginationService,
     addProductService,
     updateProductService
 };
