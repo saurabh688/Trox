@@ -2,11 +2,16 @@ import React from 'react';
 import { Grid, Paper, Avatar, TextField, FormControlLabel, Checkbox, Button, Typography, Link } from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import './Login.css';
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
 
+    let navigate = useNavigate();
 
     const signIn = () =>{
+
+        navigate("/", { replace: true });
+
 
     }
 
@@ -24,7 +29,7 @@ const Login = () => {
                         <h2>Sign In</h2>
                     </Grid>
                     <TextField label="Email or mobile phone number" placeholder="Email or mobile phone number" fullWidth required/>
-                    <TextField label="Password" placeholder="Enter password" fullWidth required/>
+                    <TextField label="Password" type="password" placeholder="Enter password" fullWidth required/>
                     <FormControlLabel
                         control={
                             <Checkbox

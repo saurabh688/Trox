@@ -3,15 +3,17 @@ import './App.css';
 import Checkout from './pages/checkout/Checkout';
 import Login from './pages/login/Login';
 import Home from './pages/home/Home';
+import Products from './pages/products/Products';
 
 function App() {
     return (
         <Router>
             <div className="App">
                 <Routes>
-                    <Route path="/checkout" element={<Checkout/>}/>
-                    <Route path="/login" element={<Login/>}/>
-                    <Route path="/" element={<Home/>}/>
+                <Route path="/checkout" element={<Checkout/>}/>
+                <Route path="/products" element={<Products/>}/>
+                <Route path="/login" element={<Login/>}/>
+                <Route path="/" element={<Home/>}/>
                 </Routes>
             </div>
         </Router>
