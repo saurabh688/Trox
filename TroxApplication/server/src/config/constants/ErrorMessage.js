@@ -4,10 +4,12 @@ const ErrorMessage = {
         Error_2: 'No product details provided!',
         Error_3: 'Required data missing for the list of product details, Required data: productName, productCategory, price, description, batchNumber, skuID',
         Error_4: 'Could not add any product!',
-        Error_5: 'Cannot without product ID!',
+        Error_5: 'Cannot update without product ID!',
         Error_6: 'Products does not exist!',
         Error_7: 'Sorry could not update product details!',
-        Error_8: 'No product found!'
+        Error_8: 'No product found!',
+        Error_9: 'Cannot delete without product ID!',
+        Error_10: 'Sorry could not delete product!'
     },
     User_Error: {
         Error_1: 'Please enter your email ID!',

@@ -18,7 +18,7 @@ const getProductList = async () => {
             isDeleted: false
         },
         order: [
-            ["productName", "ASC"]
+            ["title", "ASC"]
         ]
     });
 
@@ -47,10 +47,10 @@ const functionToVerifyProductDetails = (listOfProductDetails) => {
     }
 
     // * loop through list to verify required details of each object.
-    for (index = 0; index < listOfProductDetails.length; index++) {
+    for (product in listOfProductDetails) {
         
         // * Validation function to verify the essential details of products
-        let verifyDetails = validateProductDetails(listOfProductDetails[index]);
+        let verifyDetails = validateProductDetails(listOfProductDetails[product]);
         console.log("Date:", new Date(), 'Data returned from function validateProductDetails:', verifyDetails)
 
         if (JSON.stringify(verifyDetails.verifiedProductDetails) === JSON.stringify({})) {
@@ -146,6 +146,7 @@ const verifyIfProductExist = async (productID) => {
 
 // * Function to update existing product data in DB
 const updateExistingProduct = async (updateData, productId) => {
+    console.log(new Date(), "*******Came here*******")
     try {
         // * Update the product row in table using product ID
         let updateExistingProduct = await Product.update(updateData, {
@@ -170,6 +171,41 @@ const updateExistingProduct = async (updateData, productId) => {
         return {
             success: false,
             message: 'Sorry could not update product details!'
+        }
+    }
+    // * if error encountered throw error.
+    catch (error) {
+        return {
+            success: false,
+            message: error
+        }
+    }
+};
+
+// * Function to delete existing product data in DB
+const deleteExistingProduct = async (updateData, productId) => {
+    console.log(new Date(), "*******Came here*******")
+    try {
+        // * Update the product row in table using product ID
+        let updateProduct = await Product.update(updateData, {
+            returning: true,
+            where: { id: productId }
+        });
+
+        console.log("Date:", new Date(), "Deletion result:", updateProduct);
+
+        // * Verify if product has been deleted in the table.
+        if (updateProduct[1] > 0) {
+            
+            return {
+                success: true,
+                message: 'Product has been deleted!'
+            };
+        }
+        // * if product not deleted then return failure message.
+        return {
+            success: false,
+            message: 'Sorry could not delete product!'
         }
     }
     // * if error encountered throw error.
@@ -228,7 +264,7 @@ const viewProductPaginationService = async (currentPage) => {
                 isDeleted: false
             },
             order: [
-                ["productName", "ASC"]
+                ["title", "ASC"]
             ]
         });
 
@@ -275,7 +311,7 @@ const addProductService = async (listOfProductDetails) => {
         if (verifiedProductDetailsList.length == 0) {
             return {
                 success: false,
-                message: 'Required data missing for the list of product details, Required data: productName, productCategory, price, description, batchNumber, skuID',
+                message: 'Required data missing for the list of product details, Required data: title, description, price, quantity, listingStatus',
                 data: unverifiedProductList
             };
         }
@@ -324,7 +360,7 @@ const updateProductService = async (productDetailsObject, productId) => {
         // * Validate if product ID is provided
         if (!productId) return {
             success: false,
-            message: 'Cannot without product ID!'
+            message: 'Cannot update without product ID!'
         }
 
         // * Validate product details provided using function validateProductDetails
@@ -333,7 +369,7 @@ const updateProductService = async (productDetailsObject, productId) => {
         if (JSON.stringify(verifyDetails.verifiedProductDetails) === JSON.stringify({}))
             return {
                 success: false,
-                message: 'Required data missing for the list of product details, Required data: productName, productCategory, price, description, batchNumber, skuID',
+                message: 'Required data missing for the list of product details, Required data: title, description, price, quantity, listingStatus',
                 data: {
                     verifiedData: verifyDetails.verifiedProductDetails,
                     missingData: verifyDetails.unverifiedProductDetails
@@ -371,9 +407,48 @@ const updateProductService = async (productDetailsObject, productId) => {
     }
 }
 
+// ! Function to delete product details
+const deleteProductService = async (productId) => {
+    try {
+
+        // * Validate if product ID is provided
+        if (!productId) return {
+            success: false,
+            message: 'Cannot delete without product ID!'
+        }
+
+        // * Validate if product exist in the table. 
+        let ifProductExist = await verifyIfProductExist(productId);
+
+        console.log("Date:", new Date, 'Data returned after verifying product exist:', ifProductExist);
+
+        if (!ifProductExist.success) return ifProductExist;
+
+        // * Data to be updated after validation
+        let updateData = {
+            isDeleted: true
+        }
+
+        console.log("Date:", new Date(), "Data to be updated:", updateData);
+
+        // * Function to update existing by passing product details object
+        let updatedProduct = await deleteExistingProduct(updateData, productId);
+
+        return updatedProduct;
+    }
+    // * If error encountered throw error.
+    catch (error) {
+        return {
+            success: false,
+            message: error
+        }
+    }
+}
+
 module.exports = {
     viewAllProductService,
     viewProductPaginationService,
     addProductService,
-    updateProductService
+    updateProductService,
+    deleteProductService
 };

@@ -1,5 +1,5 @@
 const ErrorMessage = require('../../config/constants/ErrorMessage');
-const { viewAllProductService, viewProductPaginationService, addProductService, updateProductService } = require('../services/productService');
+const { viewAllProductService, viewProductPaginationService, addProductService, updateProductService, deleteProductService } = require('../services/productService');
 
 const viewAllProduct = async (req, res) => {
     const productsList = await viewAllProductService();
@@ -72,7 +72,7 @@ const addProduct = async (req, res) => {
 }
 
 const updateProduct = async (req, res) => {
-    console.log("Date:", new Date(), "Product ID from controller:", req.params.id)
+    console.log("Date:", new Date(), "Product ID from controller:", req.params.id);
     console.log("Date:", new Date(), "Product details from controller:", req.body);
     const productsList = await updateProductService(req.body, req.params.id);
     console.log("Date:", new Date(), "Data returned after updating product details:", productsList);
@@ -94,9 +94,32 @@ const updateProduct = async (req, res) => {
     }
 }
 
+const deleteProduct = async (req, res) => {
+    console.log("Date:", new Date(), "Product Id from controller:", req.params.id);
+    const product = await deleteProductService(req.params.id);
+    console.log("Date:", new Date(), "Data returned after deleting product:", product);
+
+    if (product.success) {
+        res
+        .status(200)
+        .json(product);
+    }
+    else if (!product.success && product.message == ErrorMessage.Product_Error.Error_9 || product.message == ErrorMessage.Product_Error.Error_10) {
+        res
+        .status(404)
+        .json(product);
+    }
+    else if (!product.success) {
+        res
+        .status(400)
+        .json(product);
+    }
+}
+
 module.exports = {
     viewAllProduct,
     viewProductPagination,
     addProduct,
-    updateProduct
+    updateProduct,
+    deleteProduct
 };

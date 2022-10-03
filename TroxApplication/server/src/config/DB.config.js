@@ -1,5 +1,5 @@
 module.exports = {
-    HOST_URL: "localhost",
+    HOST_LOCAL: "localhost",
     USER_LOCAL: "root",
     PASSWORD_LOCAL: "Password_123_!",
     DB_LOCAL: "trox",
